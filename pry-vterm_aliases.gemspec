@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     "readme.md",
     "license.txt",
     "lib/pry/aliases",
-    "lib/pry/aliases/bash.rb",
+    "lib/pry/aliases/common.rb",
     "lib/pry-vterm_aliases.rb",
     "rakefile.rb",
     "gemfile.rb"
