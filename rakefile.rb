@@ -17,7 +17,7 @@ namespace :build do
       spec.email = ['jordon@envygeeks.com']
       spec.platform = platform.to_s
       spec.add_dependency('pry', '~> 0.9.8')
-      spec.homepage = 'https://github.com/envygeeks/pry-bash_aliases'
+      spec.homepage = 'https://github.com/envygeeks/pry-vterm_aliases'
       spec.summary = 'Preserve your VTerm aliases in Pry.'
       spec.description = 'Preserve your VTerm aliases in Pry.'
       spec.files+= %w(readme.md license.txt rakefile.rb gemfile.rb)
