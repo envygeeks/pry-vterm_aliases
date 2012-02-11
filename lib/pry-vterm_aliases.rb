@@ -15,7 +15,7 @@ unless RbConfig::CONFIG['host_os'] =~ /mswin/
   class Pry::Plugins::VTerm
     class << self
       def version
-        '0.0.3'
+        '0.0.4'
       end
 
       def aliases
