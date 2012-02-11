@@ -3,26 +3,28 @@ unless defined? Pry::Plugins
   Pry.const_set :Plugins, Class.new
 end
 
-Pry::Commands.block_command /\.(.*)/, '.shell commands' do |cmd|
-  if defined?(Pry::Plugins::VTerm) && Pry::Plugins::VTerm.aliases.include?(cmd)
-    cmd = Pry::Plugins::VTerm.aliases[cmd]
-  end
-
-  Pry.config.system.call Pry.output, cmd
-end
-
-class Pry::Plugins::VTerm
-  class << self
-    def version
-      '0.0.2'
+unless RbConfig::CONFIG['host_os'] =~ /mswin/
+  Pry::Commands.block_command /\.(.*)/, '.shell commands' do |cmd|
+    if defined?(Pry::Plugins::VTerm) && Pry::Plugins::VTerm.aliases.include?(cmd)
+      cmd = Pry::Plugins::VTerm.aliases[cmd]
     end
 
-    def aliases
-      return @@aliases || {}
+    Pry.config.system.call Pry.output, cmd
+  end
+
+  class Pry::Plugins::VTerm
+    class << self
+      def version
+        '0.0.3'
+      end
+
+      def aliases
+        return @@aliases || {}
+      end
     end
   end
-end
 
-case ENV['SHELL']
-  when '/bin/bash' then require 'pry/aliases/bash'
+  case ENV['SHELL']
+    when '/bin/bash' then require 'pry/aliases/bash'
+  end
 end
