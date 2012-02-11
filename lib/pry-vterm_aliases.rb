@@ -25,6 +25,6 @@ unless RbConfig::CONFIG['host_os'] =~ /mswin/
   end
 
   case ENV['SHELL']
-    when '/bin/bash' then require 'pry/aliases/bash'
+    when %r!/bash\Z! then require 'pry/aliases/bash'
   end
 end
