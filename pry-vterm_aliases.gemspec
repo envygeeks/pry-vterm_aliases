@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "pry-vterm_aliases"
-  spec.version = "0.0.1"
+  spec.version = "0.0.2"
   spec.platform = "linux"
 
   if spec.respond_to? :required_rubygems_version
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
     "gemfile.rb"
   ]
   
-  spec.homepage = "https://github.com/envygeeks/pry-bash_aliases"
+  spec.homepage = 'https://github.com/envygeeks/pry-vterm_aliases'
   spec.licenses = ["MIT"]
   spec.require_paths = ["lib"]
   spec.rubygems_version = "1.8.15"
