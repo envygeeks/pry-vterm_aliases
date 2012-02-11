@@ -6,7 +6,7 @@ task :default => [:test]
 Rake::TestTask.new { |test| test.verbose, test.pattern = true, 'tests/**/*.rb' }
 
 namespace :build do
-  [:darwin, :linux].each do |platform|
+  ['universal-darwin', 'universal-linux'].each do |platform|
     spec = Gem::Specification.new do |spec|
       spec.license = 'MIT'
       spec.name = 'pry-vterm_aliases'

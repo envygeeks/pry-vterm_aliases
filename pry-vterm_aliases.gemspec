@@ -3,7 +3,7 @@
 Gem::Specification.new do |spec|
   spec.name = "pry-vterm_aliases"
   spec.version = "0.0.2"
-  spec.platform = "linux"
+  spec.platform = "universal-linux"
 
   if spec.respond_to? :required_rubygems_version
     spec.required_rubygems_version = Gem::Requirement.new(">= 0")
