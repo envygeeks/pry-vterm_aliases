@@ -1,13 +1,21 @@
-class Pry::Plugins::VTerm
-  class << self
-    command = 'bash'
-    if ENV['SHELL'] =~ %r!/zsh\Z!
-      command = 'zsh'
-    end
+if defined? Pry::Plugins::VTerm
+  class Pry::Plugins::VTerm
+    class << self
+      command = 'bash'
+      if ENV['SHELL'] =~ %r!/zsh\Z!
+        command = 'zsh'
+      end
 
-    @@aliases = `#{command} -i -c 'alias'`.gsub(/\Aalias\s{1}/, '').split(/\salias/).inject({}) do |hash, cmd|
-      cmd = cmd.split('=\'')
-      hash.update({cmd.first.strip => cmd.last.gsub(/'\Z/, '')})
+      @@aliases = `#{command} -i -c 'alias'`.each_line.to_a.map(&:chomp).delete_if { |line| line !~ /=/ }.inject({}) do |hash, cmd|
+        cmd = Shellwords.shellwords(cmd).join.gsub(/\Aalias\s{1}/, '')
+        cmd = cmd.split('=')
+        cmd[1] = cmd[1..-1].join('=')
+
+        # Just double check...
+        unless cmd[0] =~ /\s/
+          hash.update({cmd[0] => cmd[1]})
+        end
+      end
     end
   end
 end
