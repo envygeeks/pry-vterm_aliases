@@ -7,7 +7,7 @@ if defined? Pry::Plugins::VTerm
       end
 
       @@aliases = `#{command} -i -c 'alias'`.each_line.to_a.map(&:chomp).delete_if { |line| line !~ /=/ }.inject({}) do |hash, cmd|
-        cmd = Shellwords.shellwords(cmd).join.gsub(/\Aalias\s{1}/, '')
+        cmd = Shellwords.shellwords(cmd.gsub(/\Aalias\s{1}/, '')).join
         cmd = cmd.split('=')
         cmd[1] = cmd[1..-1].join('=')
 
