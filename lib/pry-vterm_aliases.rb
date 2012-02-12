@@ -9,13 +9,13 @@ unless RbConfig::CONFIG['host_os'] =~ /mswin/
       cmd = Pry::Plugins::VTerm.aliases[cmd]
     end
 
-    Pry.config.system.call Pry.output, cmd
+    Pry.config.system.call Pry.output, cmd, _pry_
   end
 
   class Pry::Plugins::VTerm
     class << self
       def version
-        '0.0.6'
+        '0.0.7'
       end
 
       def aliases
