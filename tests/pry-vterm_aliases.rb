@@ -1,5 +1,6 @@
 require "./lib/pry-vterm_aliases"
 require "minitest/autorun"
+require "minitest/pride"
 
 describe Pry::Plugins::VTerm do
   it "should have a proper version number" do
