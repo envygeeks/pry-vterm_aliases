@@ -14,7 +14,7 @@ unless RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
   class Pry::Plugins::VTerm
     class << self
-      VERSION = "0.0.7"
+      VERSION = "0.1.0"
       def version
         VERSION
       end
