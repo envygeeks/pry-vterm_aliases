@@ -1,31 +1,49 @@
-$:.unshift File.dirname(__FILE__) and require "pry"
-unless defined? Pry::Plugins
-  Pry.const_set(:Plugins, Class.new)
-end
+require "pry-vterm_aliases/version"
+require "pry"
 
-unless RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
-  Pry::Commands.block_command /\.(.*)/, ".shell commands" do |cmd|
-    if defined?(Pry::Plugins::VTerm) && Pry::Plugins::VTerm.aliases.include?(cmd)
-      cmd = Pry::Plugins::VTerm.aliases[cmd]
-    end
+unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
+  class Pry
+    module VTermAliases
+      class << self
+        def create_aliases
+          aliases.each { |k, v|
+            ::Pry::Commands.create_command(/.(#{k})(.*)/) {
+              description "Alias for: #{v}."
+              group "Terminal Aliases"
 
-    Pry.config.system.call(Pry.output, cmd, _pry_)
-  end
+              def process(cmd, extra)
+                ::Pry::VTermAliases.run_command(cmd, extra, output)
+              end
+            }
+          }
+        end
 
-  class Pry::Plugins::VTerm
-    class << self
-      VERSION = "0.1.0"
-      def version
-        VERSION
+        def aliases
+          @aliases ||= if term.nil? || term.empty?
+            {}
+          else
+            `#{term} -i -c 'alias'`.split(/\n/).inject({}) { |h, (a)|
+              a = a.sub(/^alias\s/, "").split("=")
+              unless a.first =~ /\s/
+                h.update(a.shift => ::Shellwords.shellwords(a.join("=")).join)
+              end
+            h
+            }
+          end
+        end
+
+        def term
+          @terminal ||= ENV["SHELL"].split("/").last
+        end
+
+        def run_command(cmd, extra, output)
+          output.puts(`#{aliases[cmd]}#{" " +
+            ::Shellwords.escape(extra.sub(/^\s+/, "")) unless extra.empty?}`)
+          $?.success?
+        end
       end
-
-      def aliases
-        return @@aliases || {}
-      end
     end
   end
 
-  case ENV['SHELL']
-    when %r!/(?:bash|zsh)\Z! then require "pry/aliases/common"
-  end
+  ::Pry::VTermAliases.create_aliases
 end
