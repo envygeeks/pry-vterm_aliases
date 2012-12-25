@@ -1,7 +1,10 @@
-require './lib/pry-vterm_aliases'
-require 'rubygems/package_task'
-require 'rake/testtask'
-task :default => [:test]
+require "rubygems/package_task"
+require "rake/testtask"
 
-Rake::TestTask.new { |test| test.verbose, test.pattern = true, 'tests/**/*.rb' }
-Gem::PackageTask.new(eval(IO.read('pry-vterm_aliases.gemspec'))) { |pkg| pkg.need_tar, pkg.need_zip = true }
+task :default => [:test]
+task :spec => :test
+
+Rake::TestTask.new { |t| t.verbose, t.pattern = true, "test/**/*_test.rb" }
+Gem::PackageTask.new(eval(IO.read("pry-vterm_aliases.gemspec"))) { |p|
+  p.need_tar, p.need_zip = true
+}
