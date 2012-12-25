@@ -1,7 +1,7 @@
-require File.expand_path("../lib/pry-vterm_aliases", __FILE__)
+require File.expand_path("../lib/pry-vterm_aliases/version", __FILE__)
 
 Gem::Specification.new do |s|
-  s.version = Pry::Plugins::VTerm.version
+  s.version = Pry::VTermAliases::VERSION
   s.email = ["jordon@envygeeks.com"]
   s.authors = ["Jordon Bedwell"]
   s.name = "pry-vterm_aliases"
