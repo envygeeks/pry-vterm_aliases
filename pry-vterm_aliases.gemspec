@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.add_dependency("pry")
   s.require_paths = ["lib"]
+  s.add_development_dependency("pry-doc")
   s.add_development_dependency("rake")
   s.add_development_dependency("minitest")
   s.add_development_dependency("simplecov")
