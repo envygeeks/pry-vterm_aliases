@@ -8,8 +8,8 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         def create_aliases
           aliases.each { |k, v|
             ::Pry::Commands.create_command(/^\.(#{k})(.*)/) {
-              description "Alias for: #{v}."
-              group "Terminal Aliases"
+              description "AKA: .#{Pry::Helpers::Text.bold(k)} - an alias for: #{Pry::Helpers::Text.bold(v)}."
+              group "Terminal Aliases [pry-vterm_aliases] (#{Pry::VTermAliases::VERSION})"
 
               def process(cmd, extra)
                 ::Pry::VTermAliases.run_command(cmd, extra, output)
