@@ -7,7 +7,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       class << self
         def create_aliases
           aliases.each { |k, v|
-            ::Pry::Commands.create_command(/.(#{k})(.*)/) {
+            ::Pry::Commands.create_command(/^\.(#{k})(.*)/) {
               description "Alias for: #{v}."
               group "Terminal Aliases"
 
