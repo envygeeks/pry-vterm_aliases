@@ -37,8 +37,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         end
 
         def run_command(cmd, extra, output)
-          output.puts(`#{aliases[cmd]}#{" " +
-            ::Shellwords.escape(extra.sub(/^\s+/, "")) unless extra.empty?}`)
+          output.puts(`#{aliases[cmd]}#{" " + extra.sub(/^\s+/, "") unless extra.empty?}`)
           $?.success?
         end
       end
