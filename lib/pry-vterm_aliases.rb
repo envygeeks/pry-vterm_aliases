@@ -41,8 +41,18 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
           $?.success?
         end
       end
+
+      # Better way?!?!
+      module ObjectExt
+        private
+        def capture_vterm_alias(alius, extra = nil)
+          Pry::VTermAliases.run_command(alius.gsub(/^\./, ""), " " + extra, out = StringIO.new)
+        out.string
+        end
+      end
     end
   end
 
   ::Pry::VTermAliases.create_aliases
+  ::Object.send(:include, Pry::VTermAliases::ObjectExt)
 end
