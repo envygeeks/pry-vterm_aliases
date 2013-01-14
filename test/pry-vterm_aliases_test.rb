@@ -42,5 +42,12 @@ describe(Pry::VTermAliases) {
       assert(Pry::VTermAliases.run_command(
         Pry::VTermAliases.aliases.first.first, "", out = StringIO.new))
     }
+
+    it("should raise if the alias is unknown") {
+      assert_raises(ArgumentError) {
+        Pry::VTermAliases.run_command(
+          "random128u2198aj2o", "", out = StringIO.new)
+      }
+    }
   }
 }
