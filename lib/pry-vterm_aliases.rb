@@ -25,7 +25,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
             `#{term} -i -c 'alias'`.split(/\n/).inject({}) { |h, (a)|
               a = a.sub(/^alias\s/, "").split("=")
               unless a.first =~ /\s/
-                h.update(a.shift => ::Shellwords.shellwords(a.join("=")).join)
+                h.update(a.shift => Shellwords.shellwords(a.join("=")).join)
               end
             h
             }
