@@ -7,12 +7,12 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       class << self
         def create_aliases
           aliases.each { |k, v|
-            ::Pry::Commands.create_command(/^\.(#{k})(.*)/) {
-              description "AKA: .#{Pry::Helpers::Text.bold(k)} - an alias for: #{Pry::Helpers::Text.bold(v)}."
-              group "Terminal Aliases [pry-vterm_aliases] (#{Pry::VTermAliases::VERSION})"
+            Pry::Commands.create_command(/^\.(#{k})(.*)/, listing: ".#{k}") {
+              description "alias to: #{Pry::Helpers::Text.bold(v)}."
+              group "Terminal Aliases"
 
               def process(cmd, extra)
-                ::Pry::VTermAliases.run_command(cmd, extra, output)
+                Pry::VTermAliases.run_command(cmd, extra, output)
               end
             }
           }
