@@ -6,14 +6,16 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
     module VTermAliases
       class << self
         def create_aliases
-          aliases.each do |k, v|
-            Pry::Commands.create_command(cmd_regexp(k), listing: ".#{k}") do
-              description("alias to: #{Pry::Helpers::Text.bold(v)}.")
-              group("Terminal Aliases")
+          aliases.each { |als, cmd| create_alias(als, cmd) }
+        end
 
-              def process(cmd, extra)
-                Pry::VTermAliases.run_command(cmd, extra, output)
-              end
+        def create_alias(als, desc = nil)
+          Pry::Commands.create_command(cmd_regexp(als), listing: ".#{als}") do
+            description("alias to: #{Pry::Helpers::Text.bold(desc)}.") if desc
+            group("Terminal Aliases")
+
+            def process(cmd, extra)
+              Pry::VTermAliases.run_command(cmd, extra, output)
             end
           end
         end
@@ -23,12 +25,12 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
             if shell.nil? || shell.empty?
               {}
             else
-              `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, (alius)|
-                alius = alius.sub(/^alias\s/, "").split("=")
-                unless alius.first =~ /\s/
-                  strip_wrapping_quotes(alius.shift).tap do |key|
+              `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, (als)|
+                als = als.sub(/^alias\s/, "").split("=")
+                unless als.first =~ /\s/
+                  strip_wrapping_quotes(als.shift).tap do |key|
                     hash.update(
-                      key => Shellwords.shellwords(alius.join("=")).join
+                      key => Shellwords.shellwords(als.join("=")).join
                     )
                   end
                 end
@@ -61,8 +63,8 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       # Better way?!?!
       module ObjectExt
         private
-        def capture_vterm_alias(alius, extra = nil, out = StringIO.new)
-          Pry::VTermAliases.run_command(alius.gsub(/^\./, ""), extra, out)
+        def capture_vterm_alias(als, extra = nil, out = StringIO.new)
+          Pry::VTermAliases.run_command(als.gsub(/^\./, ""), extra, out)
           ((StringIO === out) ? (out.string) : (out))
         end
       end
