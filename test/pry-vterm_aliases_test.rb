@@ -9,45 +9,45 @@ require "pry-vterm_aliases"
 require "minitest/autorun"
 require "minitest/pride"
 
-describe(Pry::VTermAliases) {
-  describe("VERSION") {
-    it("should be proper") {
-      assert_match(%r!(\d+.)+(.pre\d{1})?!, Pry::VTermAliases::VERSION)
-    }
-  }
+describe Pry::VTermAliases do
+  describe "VERSION" do
+    it "should be proper" do
+      Pry::VTermAliases::VERSION.must_match(%r!(\d+.)+(.pre\d{1})?!)
+    end
+  end
 
-  describe(".aliases") {
-    describe("shell = nil") {
-      it("should output { }") {
+  describe ".aliases" do
+    describe "shell == nil" do
+      it "should output { }" do
         aliases = Pry::VTermAliases.send(:remove_instance_variable, :@aliases)
         shell = Pry::VTermAliases.instance_variable_get(:@shell)
         Pry::VTermAliases.instance_variable_set(:@shell, "")
 
-        assert_equal({}, Pry::VTermAliases.aliases)
+        Pry::VTermAliases.aliases.must_be_kind_of(Hash)
+        Pry::VTermAliases.aliases.must_equal({})
 
         Pry::VTermAliases.instance_variable_set(:@shell, shell)
         Pry::VTermAliases.instance_variable_set(:@aliases, aliases)
-      }
-    }
+      end
+    end
 
-    describe("term != nil") {
-      it("should have a list of aliases") {
-        assert(Pry::VTermAliases.aliases.count > 0)
-      }
-    }
-  }
+    describe "shell != nil" do
+      it "should have a list of aliases" do
+        Pry::VTermAliases.aliases.count.must_be(:>, 0)
+      end
+    end
+  end
 
-  describe(".commands") {
-    it("should just work") {
+  describe ".commands" do
+    it "should just work" do
       assert(Pry::VTermAliases.run_command(
         Pry::VTermAliases.aliases.first.first, "", out = StringIO.new))
-    }
+    end
 
-    it("should raise if the alias is unknown") {
-      assert_raises(ArgumentError) {
-        Pry::VTermAliases.run_command(
-          "random128u2198aj2o", "", out = StringIO.new)
-      }
-    }
-  }
-}
+    it "should raise if the alias is unknown" do
+      assert_raises(ArgumentError) do
+        Pry::VTermAliases.run_command("random128213", "", out = StringIO.new)
+      end
+    end
+  end
+end
