@@ -45,7 +45,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
         def run_command(cmd, extra, output)
           raise ArgumentError, "unknown alias" unless (cmd = aliases[cmd])
-          output.puts(`#{cmd}#{extra}`)
+          output.puts(`#{cmd}#{" " + extra if extra}`)
           $?.success?
         end
 
