@@ -17,15 +17,15 @@ describe(Pry::VTermAliases) {
   }
 
   describe(".aliases") {
-    describe("term = nil") {
+    describe("shell = nil") {
       it("should output { }") {
         aliases = Pry::VTermAliases.send(:remove_instance_variable, :@aliases)
-        term = Pry::VTermAliases.instance_variable_get(:@terminal)
-        Pry::VTermAliases.instance_variable_set(:@terminal, "")
+        shell = Pry::VTermAliases.instance_variable_get(:@shell)
+        Pry::VTermAliases.instance_variable_set(:@shell, "")
 
         assert_equal({}, Pry::VTermAliases.aliases)
 
-        Pry::VTermAliases.instance_variable_set(:@terminal, term)
+        Pry::VTermAliases.instance_variable_set(:@shell, shell)
         Pry::VTermAliases.instance_variable_set(:@aliases, aliases)
       }
     }

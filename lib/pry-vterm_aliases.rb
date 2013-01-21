@@ -19,21 +19,22 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         end
 
         def aliases
-          @aliases ||= if term.nil? || term.empty?
-            {}
-          else
-            `#{term} -i -c 'alias'`.split(/\n/).inject({}) { |h, (a)|
-              a = a.sub(/^alias\s/, "").split("=")
-              unless a.first =~ /\s/
-                h.update(a.shift => Shellwords.shellwords(a.join("=")).join)
-              end
-            h
-            }
+          @aliases ||=
+            if shell.nil? || shell.empty?
+              {}
+            else
+              `#{shell} -i -c 'alias'`.split(/\n/).inject({}) { |h, (a)|
+                a = a.sub(/^alias\s/, "").split("=")
+                unless a.first =~ /\s/
+                  h.update(a.shift => Shellwords.shellwords(a.join("=")).join)
+                end
+              h
+              }
           end
         end
 
-        def term
-          @terminal ||= ENV["SHELL"].split("/").last
+        def shell
+          @shell ||= ENV["SHELL"].split("/").last
         end
 
         def run_command(cmd, extra, output)
