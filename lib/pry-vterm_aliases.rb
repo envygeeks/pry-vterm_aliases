@@ -7,7 +7,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       class << self
         def create_aliases
           aliases.each { |k, v|
-            Pry::Commands.create_command(/^\.(#{k})\b(.*)/, listing: ".#{k}") {
+            Pry::Commands.create_command(cmd_regexp(k), listing: ".#{k}") {
               description "alias to: #{Pry::Helpers::Text.bold(v)}."
               group "Terminal Aliases"
 
@@ -26,7 +26,9 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
               `#{shell} -i -c 'alias'`.split(/\n/).inject({}) { |h, (a)|
                 a = a.sub(/^alias\s/, "").split("=")
                 unless a.first =~ /\s/
-                  h.update(a.shift => Shellwords.shellwords(a.join("=")).join)
+                  strip_wrapping_quotes(a.shift).tap do |key|
+                    h.update(key => Shellwords.shellwords(a.join("=")).join)
+                  end
                 end
               h
               }
@@ -39,9 +41,23 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
         def run_command(cmd, extra, output)
           raise ArgumentError, "unknown alias" unless (cmd = aliases[cmd])
-          extra = " " + extra.sub(/^\s+/, "") unless extra.empty?
+
+          unless extra.nil? || extra.empty?
+            extra = " " + extra.sub(/^\s+/, "")
+          end
+
           output.puts(`#{cmd}#{extra}`)
           $?.success?
+        end
+
+        private
+        def strip_wrapping_quotes(str)
+          ((str =~ /'(.*)'/) ? ($1) : (str))
+        end
+
+        private
+        def cmd_regexp(str)
+          /^\.(?:(#{Regexp.escape(str)})(?:$|\s+(.*)))/
         end
       end
 
