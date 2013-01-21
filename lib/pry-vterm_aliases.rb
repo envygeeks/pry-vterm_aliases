@@ -51,7 +51,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
         private
         def strip_wrapping_quotes(str)
-          ((str =~ /'(.*)'/) ? ($1) : (str))
+          ((str =~ /^'(.*)'$/) ? ($1) : (str))
         end
 
         private
