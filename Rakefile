@@ -1,10 +1,5 @@
-require "rubygems/package_task"
-require "rake/testtask"
+require "rspec/core/rake_task"
 
-task :default => [:test]
-task :spec => :test
-
-Rake::TestTask.new { |t| t.verbose, t.pattern = true, "test/**/*_test.rb" }
-Gem::PackageTask.new(eval(IO.read("pry-vterm_aliases.gemspec"))) { |p|
-  p.need_tar, p.need_zip = true
-}
+task :default => [:spec]
+task :test => :spec
+RSpec::Core::RakeTask.new :spec

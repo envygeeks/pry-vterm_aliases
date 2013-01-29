@@ -1,6 +1,6 @@
-guard("minitest") {
-  watch(/^test\/(.*)\/?(.*)_test\.rb/)
-  watch(/^lib\/(.*)\.rb/) { |m|
-    "test/#{m[1]}_test.rb"
-  }
-}
+guard :rspec do
+  watch(%r{^spec/(.*)_spec\.rb$})
+  watch(%r{^lib/(.*)\.rb}) do |file|
+    "spec/#{file[1]}_spec.rb"
+  end
+end
