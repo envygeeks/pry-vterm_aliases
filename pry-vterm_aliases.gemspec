@@ -8,11 +8,8 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.add_dependency("pry")
   s.require_paths = ["lib"]
-  s.add_development_dependency("pry-doc")
-  s.add_development_dependency("rake")
   s.add_development_dependency("rspec")
   s.add_development_dependency("simplecov")
-  s.add_development_dependency("guard-rspec")
   s.summary = "Enable your Bash and ZSH alises in Pry."
   s.description = "Enable your Bash and ZSH alises in Pry."
   s.homepage = "http://envygeeks.com/projects/pry-vterm_aliases/"
