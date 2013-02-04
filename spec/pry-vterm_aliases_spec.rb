@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path("../../lib", __FILE__))
-unless ENV["COVERAGE"] == false
+
+if ENV["COVERAGE"] == true
   require "simplecov"
   SimpleCov.start
 end
