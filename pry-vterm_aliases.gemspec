@@ -6,9 +6,10 @@ Gem::Specification.new do |s|
   s.authors = ["Jordon Bedwell"]
   s.name = "pry-vterm_aliases"
   s.licenses = ["MIT"]
-  s.add_dependency("pry")
   s.require_paths = ["lib"]
-  s.add_development_dependency("rspec")
+  s.add_dependency("pry", "~> 0.9.11")
+  s.add_development_dependency("rake", "~> 10.0.3")
+  s.add_development_dependency("rspec", "~> 2.12.0")
   s.summary = "Enable your Bash and ZSH alises in Pry."
   s.description = "Enable your Bash and ZSH alises in Pry."
   s.homepage = "http://envygeeks.com/projects/pry-vterm_aliases/"
