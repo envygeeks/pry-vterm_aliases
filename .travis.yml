@@ -1,12 +1,13 @@
+services: mongodb
 rvm:
-  - 1.9.2
-  - 1.9.3
   - rbx-19mode
+  - 1.9.3
   - jruby-19mode
+
 notifications:
   recipients:
     - envygeeks@gmail.com
+
 branches:
   only:
     - master
-
