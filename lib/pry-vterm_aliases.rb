@@ -10,7 +10,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         end
 
         def create_alias(als, desc = nil)
-          Pry::Commands.create_command(cmd_regexp(als), listing: ".#{als}") do
+          Pry::Commands.create_command(cmd_regexp(als), :listing => ".#{als}") do
             description("alias to: #{Pry::Helpers::Text.bold(desc)}.") if desc
             group("Terminal Aliases")
 
