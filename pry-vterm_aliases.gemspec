@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.add_dependency("pry", "~> 0.9.11")
   s.add_development_dependency("rspec", "~> 2.12.0")
   s.summary = "Enable your Bash and ZSH alises in Pry."
-  s.description = "Enable your Bash and ZSH alises in Pry."
+  s.description = "Enable your Bash and ZSH alises in Pry shell."
   s.homepage = "http://envygeeks.com/projects/pry-vterm_aliases/"
   s.files = ["Readme.md", "Rakefile", "License", "Gemfile"] + Dir["lib/**/*"]
 end
