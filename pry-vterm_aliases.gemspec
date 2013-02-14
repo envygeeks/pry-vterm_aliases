@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name = "pry-vterm_aliases"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.add_dependency("pry", "~> 0.9.11")
+  s.add_dependency("pry", "~> 0.9.12")
   s.add_development_dependency("rspec", "~> 2.12.0")
   s.summary = "Enable your Bash and ZSH alises in Pry."
   s.description = "Enable your Bash and ZSH alises in Pry shell."
