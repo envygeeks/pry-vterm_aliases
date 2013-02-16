@@ -11,7 +11,7 @@ require "rspec"
 describe Pry::VTermAliases do
   describe "VERSION" do
     it "should be proper" do
-      Pry::VTermAliases::VERSION.should match %r!(\d+.)+(.pre\d{1})?!
+      Pry::VTermAliases::VERSION.should match %r!\A(\d+.)+(.pre\d{1})?\Z!
     end
   end
 
