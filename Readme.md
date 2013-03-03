@@ -1,4 +1,4 @@
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/envygeeks/pry-vterm_aliases)
+[![build status](https://travis-ci.org/envygeeks/pry-vterm_aliases.png)](https://travis-ci.org/envygeeks/pry-vterm_aliases/) [![Code Climate](https://codeclimate.com/github/envygeeks/pry-vterm_aliases.png)](https://codeclimate.com/github/envygeeks/pry-vterm_aliases)
 
 Enable your ZSH and Bash aliases inside of Pry.
 
