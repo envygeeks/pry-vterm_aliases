@@ -30,8 +30,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
                 unless als.first =~ /\s/
                   strip_wrapping_quotes(als.shift).tap do |key|
                     hash.update(
-                      key => Shellwords.shellwords(als.join("=")).join
-                    )
+                      key => Shellwords.shellwords(als.join("=")).join)
                   end
                 end
               hash
@@ -65,7 +64,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         private
         def capture_vterm_alias(als, extra = nil, out = StringIO.new)
           Pry::VTermAliases.run_command(als.gsub(/^\./, ""), extra, out)
-          ((StringIO === out) ? (out.string) : (out))
+          StringIO === out ? out.string : out
         end
       end
     end
