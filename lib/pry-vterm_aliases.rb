@@ -26,7 +26,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
               {}
             else
               `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, (als)|
-                als = als.sub(/^alias\s/, "").split("=")
+                als = als.sub(/\Aalias\s/, "").split("=")
                 unless als.first =~ /\s/
                   strip_wrapping_quotes(als.shift).tap do |key|
                     hash.update(
@@ -50,12 +50,12 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
         private
         def strip_wrapping_quotes(str)
-          ((str =~ /^'(.*)'$/) ? ($1) : (str))
+          ((str =~ /\A'(.*)'\Z/) ? ($1) : (str))
         end
 
         private
         def cmd_regexp(str)
-          /^\.(?:(#{Regexp.escape(str)})(?:$|\s+(.*)))/
+          /\A\.(?:(#{Regexp.escape(str)})(?:\Z|\s+(.*)))/
         end
       end
 
@@ -63,7 +63,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       module ObjectExt
         private
         def capture_vterm_alias(als, extra = nil, out = StringIO.new)
-          Pry::VTermAliases.run_command(als.gsub(/^\./, ""), extra, out)
+          Pry::VTermAliases.run_command(als.gsub(/\A\./, ""), extra, out)
           StringIO === out ? out.string : out
         end
       end
