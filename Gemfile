@@ -1,4 +1,10 @@
 source "https://rubygems.org"
 gemspec
 
-gem "rake", "~> 10.0.3", :group => :development
+group :development, :testing do
+  gem "rb-inotify"
+  gem "rake"
+  gem "simplecov"
+  gem "guard-rspec"
+  gem "listen", github: "guard/listen"
+end
