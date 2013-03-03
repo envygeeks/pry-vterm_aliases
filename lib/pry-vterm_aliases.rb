@@ -25,15 +25,15 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
             if shell.nil? || shell.empty?
               {}
             else
-              `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, (als)|
-                als = als.sub(/\Aalias\s/, "").split("=")
-                unless als.first =~ /\s/
-                  strip_wrapping_quotes(als.shift).tap do |key|
-                    hash.update(
-                      key => Shellwords.shellwords(als.join("=")).join)
+              `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |h, (a)|
+                a = a.sub(/\Aalias\s/, "").split("=")
+                unless a.first =~ /\s/
+                  strip_wrapping_quotes(a.shift).tap do |k|
+                    h.update(
+                      k => Shellwords.shellwords(a.join("=")).join)
                   end
                 end
-              hash
+              h
               end
           end
         end
