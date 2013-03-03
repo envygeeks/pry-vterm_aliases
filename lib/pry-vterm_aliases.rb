@@ -63,12 +63,11 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
           $?.success?
         end
 
-        private
+      private
         def strip_wrapping_quotes(str)
           str =~ /\A'(.*)'\Z/ ? $1 : str
         end
 
-        private
         def cmd_regexp(str)
           /\A\.(?:(#{Regexp.escape(str)})(?:\Z|\s+(.*)))/
         end
