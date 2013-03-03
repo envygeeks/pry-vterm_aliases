@@ -15,7 +15,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
             group("Terminal Aliases")
 
             def process(cmd, extra)
-              Pry::VTermAliases.run_command(cmd, extra, output)
+              Pry::VTermAliases.run_alias(cmd, extra, output)
             end
           end
         end
@@ -57,7 +57,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
           @shell ||= ENV["SHELL"].split("/").last
         end
 
-        def run_command(cmd, extra, output)
+        def run_alias(cmd, extra, output)
           raise ArgumentError, "unknown alias" unless (cmd = aliases[cmd])
           output.puts(`#{cmd}#{" " + extra if extra}`)
           $?.success?
@@ -78,7 +78,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
       module ObjectExt
         private
         def capture_vterm_alias(als, extra = nil, out = StringIO.new)
-          Pry::VTermAliases.run_command(als.gsub(/\A\./, ""), extra, out)
+          Pry::VTermAliases.run_alias(als.gsub(/\A\./, ""), extra, out)
           StringIO === out ? out.string : out
         end
       end
