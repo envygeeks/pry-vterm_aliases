@@ -12,5 +12,5 @@ Gem::Specification.new do |s|
   s.summary = "Enable your Bash and ZSH alises in Pry."
   s.description = "Enable your Bash and ZSH alises in Pry shell."
   s.homepage = "http://envygeeks.com/projects/pry-vterm_aliases/"
-  s.files = ["Readme.md", "Rakefile", "License", "Gemfile"] + Dir["lib/**/*"]
+  s.files = ["Readme.md", "Rakefile", "MIT-License", "Gemfile"] + Dir["lib/**/*"]
 end
