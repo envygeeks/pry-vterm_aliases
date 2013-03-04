@@ -38,21 +38,6 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
           end
         end
 
-        def functions
-          @functions ||=
-            if shell.nil? || shell.empty? || shell != "zsh"
-              {}
-            else
-              `zsh -ic 'functions'`.split(/\n/).inject([]) do |a, (v)|
-                if v =~ %r!\A(?:[a-zA-Z0-9_]+)\s\(\)\s{\Z!
-                  a.push(v.gsub(%r!\s\(\)\s{\Z!, ""))
-                end
-
-                a
-              end
-            end
-        end
-
         def shell
           @shell ||= ENV["SHELL"].split("/").last
         end
