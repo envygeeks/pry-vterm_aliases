@@ -21,21 +21,7 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
         end
 
         def aliases
-          @aliases ||=
-            if shell.nil? || shell.empty?
-              {}
-            else
-              `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |h, (a)|
-                a = a.sub(/\Aalias\s/, "").split("=")
-                unless a.first =~ /\s/
-                  strip_wrapping_quotes(a.shift).tap do |k|
-                    h.update(
-                      k => Shellwords.shellwords(a.join("=")).join)
-                  end
-                end
-              h
-              end
-          end
+          @aliases ||= (shell.nil? || shell.empty?) ? {} : find_aliases
         end
 
         def shell
@@ -48,13 +34,27 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
           $?.success?
         end
 
-      private
+        private
         def strip_wrapping_quotes(str)
           str =~ /\A'(.*)'\Z/ ? $1 : str
         end
 
+        private
         def cmd_regexp(str)
           /\A\.(?:(#{Regexp.escape(str)})(?:\Z|\s+(.*)))/
+        end
+
+        private
+        def find_aliases
+          `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, alius|
+            alius = alius.sub(/\Aalias\s/, "").split("=")
+            unless alius.first =~ /\s/
+              strip_wrapping_quotes(alius.shift).tap do |k|
+                hash.update(k => Shellwords.shellwords(alius.join("=")).join)
+              end
+            end
+            hash
+          end
         end
       end
 
