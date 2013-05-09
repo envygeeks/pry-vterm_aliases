@@ -1,0 +1,2 @@
+--require luna/rspec/formatters/checks
+--format Luna::RSpec::Formatters::Checks

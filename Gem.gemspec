@@ -1,6 +1,7 @@
 require File.expand_path("../lib/pry-vterm_aliases/version", __FILE__)
 
 Gem::Specification.new do |spec|
+  spec.add_development_dependency("luna-rspec-formatters")
   spec.add_development_dependency("coveralls")
   spec.version = Pry::VTermAliases::VERSION
   spec.add_development_dependency("rake")
