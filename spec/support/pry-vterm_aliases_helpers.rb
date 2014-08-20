@@ -3,11 +3,10 @@ module RSpec
     module Pry
       module VTermAliasesHelpers
         def stub_grave_commands
-          ::Pry::VTermAliases.stub(:`).and_return do |cmd|
+          allow(::Pry::VTermAliases).to receive :` do |cmd|
             if cmd !~ /^(?:bash|zsh)\s-ic\s'alias'/
-              Kernel.send(:`, cmd)
-            else
-              "ls='ls --color=auto'"
+              then Kernel.send(:`, cmd)
+              else "ls='ls --color=auto'"
             end
           end
         end

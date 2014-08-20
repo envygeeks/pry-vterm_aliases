@@ -28,14 +28,12 @@ describe Pry::VTermAliases do
   end
 
   it "raises if an alias is unknown" do
-    expect_error ArgumentError do
-      subject.run_alias("hello", "")
-    end
+    expect { subject.run_alias("hello", "") }.to raise_error ArgumentError
   end
 
   it "runs aliases as asked" do
     stub_grave_commands
     expect(subject.run_alias("ls", "Gemfile", out = StringIO.new)).to eq true
-    out.string.should eq("Gemfile\n")
+    expect(out.string).to eq "Gemfile\n"
   end
 end

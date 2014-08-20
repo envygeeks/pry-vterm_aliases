@@ -1,6 +1,5 @@
 require_relative "../support/simplecov.rb"
 require "luna/rspec/formatters/checks"
-require "rspec/expect_error"
 require "pry-vterm_aliases"
 require "rspec"
 
