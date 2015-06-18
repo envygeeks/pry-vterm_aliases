@@ -1,13 +1,10 @@
 rvm:
-  - 2.1.0
-  - 1.9.3
-  - 2.0.0
-  - jruby
-
+  - 2.0
+  - 2.1
+  - 2.2
 notifications:
   recipients:
-    - envygeeks@gmail.com
-
+    - jordon@envygeeks.io
 branches:
   only:
     - master
