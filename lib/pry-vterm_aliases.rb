@@ -6,22 +6,31 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
     module VTermAliases
       class << self
         def create_aliases
-          aliases.each { |als, cmd| create_alias(als, cmd) }
+          aliases.each do |a, c|
+            create_alias(
+              a, c
+            )
+          end
         end
 
         def create_alias(als, desc = nil)
           Pry::Commands.create_command(cmd_regexp(als), listing: ".#{als}") do
-            description("alias to: #{Pry::Helpers::Text.bold(desc)}.") if desc
-            group("Terminal Aliases")
+            description "alias to: #{Pry::Helpers::Text.bold(desc)}." if desc
+            group "Terminal Aliases"
 
             def process(cmd, extra)
-              Pry::VTermAliases.run_alias(cmd, extra, output)
+              Pry::VTermAliases.run_alias(
+                cmd, extra, output
+              )
             end
           end
         end
 
         def aliases
-          @aliases ||= (shell.nil? || shell.empty?) ? {} : find_aliases
+          @aliases ||= if shell.nil? || shell.empty?
+            then {}
+            else find_aliases
+          end
         end
 
         def shell
@@ -46,24 +55,30 @@ unless ::RbConfig::CONFIG["host_os"] =~ /mswin|mingw32/
 
         private
         def find_aliases
-          `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |hash, alius|
-            alius = alius.sub(/\Aalias\s/, "").split("=")
-            unless alius.first =~ /\s/
-              strip_wrapping_quotes(alius.shift).tap do |k|
-                hash.update(k => Shellwords.shellwords(alius.join("=")).join)
+          `#{shell} -ic 'alias'`.split(/\n/).inject({}) do |h, a|
+            if a =~ /\Aalias\s+/
+              a = a.sub(/\Aalias\s/, "").split("=")
+              unless a.first =~ /\s/
+                strip_wrapping_quotes(a.shift).tap do |k|
+                  h.update(
+                    k => Shellwords.shellwords(a.join("=")).join
+                  )
+                end
               end
             end
-            hash
+
+            h
           end
         end
       end
 
       # Better way?!?!
       module ObjectExt
-        private
         def capture_vterm_alias(als, extra = nil, out = StringIO.new)
           Pry::VTermAliases.run_alias(als.gsub(/\A\./, ""), extra, out)
-          StringIO === out ? out.string : out
+          if !out.is_a?(StringIO)
+            then out else out.string
+          end
         end
       end
     end
